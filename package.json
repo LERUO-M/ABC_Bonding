@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "compile": "hardhat compile",
-    "test": "hardhat test",
-    "deployAllAndVerify": "hardhat run ./scripts/deployAllAndVerify.js",
+    "test": "hardhat test test/core.test.js",
+    "test:e2e": "hardhat test test/deployAll.e2e.test.js",
+    "deploy": "hardhat run ./scripts/deployAllAndVerify.js",
     "start:all": "node ./scripts/startAll.js"
   },
   "devDependencies": {
