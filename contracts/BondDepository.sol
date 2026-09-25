@@ -410,7 +410,7 @@ library FixedPoint {
 }
 
 interface ITreasury {
-    function deposit( uint _amount, address _token, uint _profit ) external returns ( bool );
+    function deposit( uint _amount, address _token, uint _profit ) external returns ( uint );
     function valueOf( address _token, uint _amount ) external view returns ( uint value_ );
 }
 
@@ -698,7 +698,7 @@ contract TimeBondDepository is Ownable {
         if ( fee != 0 ) { // fee is transferred to dao 
             Time.safeTransfer( DAO, fee ); 
         }
-        require(balanceBefore.add(profit) == Time.balanceOf(address(this)), "Not enough Time to cover profit");
+        require(balanceBefore.add(payout) == Time.balanceOf(address(this)), "Not enough Time to cover payout");
         // total debt is increased
         totalDebt = totalDebt.add( value ); 
                 

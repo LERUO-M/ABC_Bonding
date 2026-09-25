@@ -7,3 +7,5 @@ artifacts/
 .env
 node_modules/
 cache/
+# Deployment run artifacts
+deployments/
