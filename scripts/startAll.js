@@ -22,6 +22,10 @@ require("dotenv").config();
  *                  file, then start the frontend. Useful for restarting the
  *                  frontend without redeploying.
  *
+ * Contracts are recompiled (`hardhat compile`) right before deploying, so
+ * switching branches/pulling changes never deploys stale bytecode. This step
+ * is skipped along with deployment when --skip-deploy is passed.
+ *
  * Both a locally spawned `hardhat node` and the frontend dev server are kept
  * attached to this process and are terminated together on exit/Ctrl+C.
  */
@@ -204,6 +208,8 @@ async function main() {
 
   if (!args.skipDeploy) {
     validateNetworkConfig(network, args.hardhat);
+    console.log("\nCompiling contracts...");
+    run("npx", ["hardhat", "compile"]);
     console.log(`\nDeploying + verifying contracts on network "${network}"...`);
     run("npx", ["hardhat", "run", "scripts/deployAllAndVerify.js", "--network", network]);
   } else {
