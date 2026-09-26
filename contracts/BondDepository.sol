@@ -552,7 +552,7 @@ contract TimeBondDepository is Ownable {
         require( terms.controlVariable == 0, "Bonds must be initialized from 0" );
         require( _controlVariable >= 40, "Can lock adjustment" );
         require( _maxPayout <= 1000, "Payout cannot be above 1 percent" );
-        require( _vestingTerm >= 129600, "Vesting must be longer than 36 hours" );
+        require( _vestingTerm >= 1, "Vesting must be longer than 1 second" );
         require( _fee <= 10000, "DAO fee cannot exceed payout" );
         terms = Terms ({
             controlVariable: _controlVariable,
@@ -579,7 +579,7 @@ contract TimeBondDepository is Ownable {
      */
     function setBondTerms ( PARAMETER _parameter, uint _input ) external onlyOwner() {
         if ( _parameter == PARAMETER.VESTING ) { // 0
-            require( _input >= 129600, "Vesting must be longer than 36 hours" );
+            require( _input >= 1, "Vesting must be longer than 1 second" );
             terms.vestingTerm = uint32(_input);
         } else if ( _parameter == PARAMETER.PAYOUT ) { // 1
             require( _input <= 1000, "Payout cannot be above 1 percent" );

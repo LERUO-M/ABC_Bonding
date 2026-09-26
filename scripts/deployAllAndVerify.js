@@ -306,7 +306,10 @@ async function main() {
   const MAX_PAYOUT = 500; // 0.5%
   const FEE = 1000; // 10%
   const MAX_DEBT = ethers.parseUnits(process.env.MAX_DEBT || "1000000000", 18);
-  const VESTING_TERM = 5 * 24 * 60 * 60; // 5 days (> required 36h minimum)
+  // VESTING_TERM: bond payout linearly vests over this many seconds before it
+  // can be redeemed. Default is 5 days for realistic/production use; override
+  // with the VESTING_TERM env var (e.g. VESTING_TERM=10) for fast local testing.
+  const VESTING_TERM = Number(process.env.VESTING_TERM || 5 * 24 * 60 * 60);
   await (await bondDepository.initializeBondTerms(BCV, MIN_PRICE, MAX_PAYOUT, FEE, MAX_DEBT, VESTING_TERM)).wait();
   console.log("  BondDepository.initializeBondTerms done");
 
